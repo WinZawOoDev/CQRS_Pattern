@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHeroDto } from './dto/create-hero.dto';
 import { UpdateHeroDto } from './dto/update-hero.dto';
+import { CommandBus } from '@nestjs/cqrs';
+import { KillDragonDto } from './dto/kill-dragon.dto';
+import { KillDragonCommand } from './commands/kill-dragron.command';
 
 @Injectable()
 export class HeroesService {
+
+  constructor(private commandBus: CommandBus) { }
+
+  async killDragon(heroId: string, killDragonDto: KillDragonDto) {
+    return this.commandBus.execute(new KillDragonCommand(heroId, killDragonDto.dragonId));
+  }
+
   create(createHeroDto: CreateHeroDto) {
     return 'This action adds a new hero';
   }

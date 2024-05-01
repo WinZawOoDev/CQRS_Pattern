@@ -5,11 +5,16 @@ import { UpdateHeroDto } from './dto/update-hero.dto';
 
 @Controller('heroes')
 export class HeroesController {
-  constructor(private readonly heroesService: HeroesService) {}
+  constructor(private readonly heroesService: HeroesService) { }
 
   @Post()
   create(@Body() createHeroDto: CreateHeroDto) {
     return this.heroesService.create(createHeroDto);
+  }
+
+  @Post('kill-dragron')
+  killDragron() {
+    return this.heroesService.killDragon('ioi2o', { dragonId: 'i3ofi3' })
   }
 
   @Get()
