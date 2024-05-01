@@ -5,6 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { KillDragonHandler } from './commands/kill-dragron.handler';
 import { HeroRepository } from './repository/hero.reposition';
 import { HeroKilledDragonHandler } from './events/hero-killed-dragon.handler';
+import { GetHeroesHandler } from './quries/get-heroes.handler';
 
 @Module({
   imports: [CqrsModule],
@@ -13,7 +14,8 @@ import { HeroKilledDragonHandler } from './events/hero-killed-dragon.handler';
     HeroesService,
     KillDragonHandler,
     HeroRepository,
-    HeroKilledDragonHandler
+    HeroKilledDragonHandler,
+    GetHeroesHandler
   ],
 })
 export class HeroesModule { }

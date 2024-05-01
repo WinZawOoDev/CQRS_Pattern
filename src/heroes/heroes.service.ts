@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHeroDto } from './dto/create-hero.dto';
 import { UpdateHeroDto } from './dto/update-hero.dto';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { KillDragonDto } from './dto/kill-dragon.dto';
 import { KillDragonCommand } from './commands/kill-dragron.command';
+import { GetHeroesQuery } from './quries/get-heroes.query';
 
 @Injectable()
 export class HeroesService {
 
-  constructor(private commandBus: CommandBus) { }
+  constructor(
+    private commandBus: CommandBus,
+    private queryBus: QueryBus
+  ) { }
 
   async killDragon(heroId: string, killDragonDto: KillDragonDto) {
     return this.commandBus.execute(new KillDragonCommand(heroId, killDragonDto.dragonId));
@@ -19,7 +23,7 @@ export class HeroesService {
   }
 
   findAll() {
-    return `This action returns all heroes`;
+    return this.queryBus.execute(new GetHeroesQuery())
   }
 
   findOne(id: number) {
